@@ -2,7 +2,7 @@
 using UnityEngine.InputSystem;
 
 
-public class Player : MonoBehaviour
+public class PlayerRocketMovement : MonoBehaviour
 {
 
     [Header("Input Action")]

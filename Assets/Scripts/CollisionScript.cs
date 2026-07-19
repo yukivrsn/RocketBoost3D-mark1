@@ -1,9 +1,12 @@
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] float delayTime = 3f;
     private void OnCollisionEnter(Collision collision)
     {
         switch (collision.gameObject.tag)
@@ -16,15 +19,34 @@ public class CollisionScript : MonoBehaviour
                 break;
             case "Finish":
                 Debug.Log("Level Complete");
-                NextLevel();
+                FinishSequence();
                 break;
 
             default:
                 Debug.Log("Explode");
-                SceneReload();
+                StartCrashSequence();
                 break;
         } 
     }
+
+    private void StartCrashSequence()
+    {
+      //  GetComponent<PlayerRocketMovement>().gameObject.SetActive( false );  | This disables the entire GameObject that PlayerRocketMovement is attached to.
+        GetComponent<PlayerRocketMovement>().enabled = false;
+        Invoke("SceneReload", delayTime);
+
+    }
+    private void FinishSequence()
+    {
+      //  GetComponent<PlayerRocketMovement>().gameObject.SetActive( false );  | This disables the entire GameObject that PlayerRocketMovement is attached to.
+        GetComponent<PlayerRocketMovement>().enabled = false;
+        Invoke("NextLevel", delayTime);
+
+
+
+    }
+
+
      private void SceneReload()
     {
         //var currentScene = SceneManager.GetActiveScene(); // this stores string
@@ -35,14 +57,14 @@ public class CollisionScript : MonoBehaviour
 
     private void NextLevel()
     {
-        var currentScene = SceneManager.GetActiveScene().buildIndex;
-        var nextLevel = currentScene + 1;
-        if (nextLevel == SceneManager.sceneCountInBuildSettings - 1) {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextLevel; 
+        if (currentScene == SceneManager.sceneCountInBuildSettings - 1) {
 
             nextLevel = 0;
         }
-
-        SceneManager.LoadScene(nextLevel);
+        else {  nextLevel = currentScene + 1; }
+            SceneManager.LoadScene(nextLevel);
     }
 
     
