@@ -3,16 +3,18 @@ using UnityEngine;
 public class dropper : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeField] private Rigidbody rb; // could skip serialized field
+    // [SerializeField] private Rigidbody rbDropper; // could skip serialized field
+    [SerializeField] private float time;
+    private Rigidbody rbDropper;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rbDropper = GetComponent<Rigidbody>();
     }
     void Update()
     { 
-        if (Time.timeSinceLevelLoad > 12f)
+        if (Time.timeSinceLevelLoad > time)
         {
-            rb.useGravity = true;
+            rbDropper.useGravity = true;
         }
     }
 }

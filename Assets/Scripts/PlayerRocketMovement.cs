@@ -33,7 +33,7 @@ public class PlayerRocketMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>(); // no need as we are already giving the reference in the inspector but if we forget to give it then it will throw error so this is a good practice to have it here as well
-        // mistake object would enable  after awake but it wont be all the axis like how would it enable fxn ran after awake but it doesn't have the ref for the same rb = GetComponent<Rigidbody>();
+        // mistake object would enable  after awake but it wont be all the axis like how would it enable fxn ran after awake but it doesn't have the ref for the same rbDropper = GetComponent<Rigidbody>();
 
     }
 
@@ -47,7 +47,7 @@ public class PlayerRocketMovement : MonoBehaviour
 
     void Start()
     {
-        // rb = GetComponent<Rigidbody>();
+        // rbDropper = GetComponent<Rigidbody>();
         
     }
 
@@ -124,7 +124,12 @@ public class PlayerRocketMovement : MonoBehaviour
             if (rotationValue  < 0)
             {
                 leftSideThrust.Stop();
-            } else if (rotationValue > 0) { rightSideThrust.Stop();}
+                rightSideThrust.Play();
+                behindSideThrust.Play();
+            } else if (rotationValue > 0) { rightSideThrust.Stop();
+                leftSideThrust.Play();
+                behindSideThrust.Play();
+            }
 
         }
 
