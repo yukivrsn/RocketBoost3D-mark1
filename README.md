@@ -92,15 +92,12 @@ Reach the landing platform without crashing into obstacles.
 
 ## 📸 Screenshots
 
-Add gameplay screenshots here.
+## Screenshots
 
-```
-Images/
-├── https://github.com/yukivrsn/RocketBoost3D-mark1/blob/main/Images/game1.png
-├── https://github.com/yukivrsn/RocketBoost3D-mark1/blob/main/Images/game2.png
-```
-
----
+<p align="center">
+  <img src="Images/game1.png" width="45%" alt="Gameplay 1"/>
+  <img src="Images/game2.png" width="45%" alt="Gameplay 2"/>
+</p>
 
 ## 🚀 Future Improvements
 
