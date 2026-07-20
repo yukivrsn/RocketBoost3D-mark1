@@ -96,8 +96,8 @@ Add gameplay screenshots here.
 
 ```
 Images/
-├── game1y.png
-├── game2.png
+├── https://github.com/yukivrsn/RocketBoost3D-mark1/blob/main/Images/game1.png
+├── https://github.com/yukivrsn/RocketBoost3D-mark1/blob/main/Images/game2.png
 ```
 
 ---

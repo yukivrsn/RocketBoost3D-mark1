@@ -11,21 +11,30 @@ public class PlayerRocketMovement : MonoBehaviour
     
     
     [Header("Component Ref")]
-    [SerializeField] private Rigidbody rb;
+    //[SerializeField] we use it jsut as convention with out there wont we issue like here but we doit as a goof practice
+    private Rigidbody rb;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip sfxThrust;
 
 
     [Header("Power value")]
     [SerializeField] private float thrustPower;
     [SerializeField] private float rotationPower;
 
+    [Header("Thrusters")]
+    [SerializeField] private ParticleSystem engineThruster;
+    [SerializeField] private ParticleSystem leftSideThrust;
+    [SerializeField] private ParticleSystem rightSideThrust;
+    [SerializeField] private ParticleSystem behindSideThrust;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>(); // no need as we are already giving the reference in the inspector but if we forget to give it then it will throw error so this is a good practice to have it here as well
         // mistake object would enable  after awake but it wont be all the axis like how would it enable fxn ran after awake but it doesn't have the ref for the same rb = GetComponent<Rigidbody>();
+
     }
 
 
@@ -38,7 +47,7 @@ public class PlayerRocketMovement : MonoBehaviour
 
     void Start()
     {
-         rb = GetComponent<Rigidbody>();
+        // rb = GetComponent<Rigidbody>();
         
     }
 
@@ -61,17 +70,35 @@ public class PlayerRocketMovement : MonoBehaviour
     {
         if (inpThrust.IsPressed())
         {
-            if (!audioSource.isPlaying)
+            engineThruster.Play();
+            leftSideThrust.Play();
+            rightSideThrust.Play(); 
+            behindSideThrust.Play();    
+
+            if (!audioSource.isPlaying) // so that it won't paly 60time each second
             {
-                audioSource.Play();
+                audioSource.PlayOneShot(sfxThrust);
             }
+
+            /*
+            if (!engineThruster.isPlaying)
+            {
+                engineThruster.Play();
+            }
+             */
 
 
            // Debug.Log("Is Pressed");
 
             rb.AddRelativeForce(Vector3.up * thrustPower * Time.deltaTime);
 
-        } else { audioSource.Stop(); }
+        } else { audioSource.Stop();
+
+            engineThruster.Stop();
+            leftSideThrust.Stop();
+            rightSideThrust.Stop();
+            behindSideThrust.Stop(); 
+        }
       
     }
     private void ProcessRotation()
@@ -93,6 +120,11 @@ public class PlayerRocketMovement : MonoBehaviour
             transform.Rotate(Vector3.forward * rotationValue * rotationPower * Time.deltaTime);
 
             rb.freezeRotation = false;
+
+            if (rotationValue  < 0)
+            {
+                leftSideThrust.Stop();
+            } else if (rotationValue > 0) { rightSideThrust.Stop();}
 
         }
 
